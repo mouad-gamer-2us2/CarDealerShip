@@ -15,8 +15,8 @@
           <li class="nav-item"><a class="nav-link" href="{{route('general.page')}}">General</a></li>
           <li class="nav-item"><a class="nav-link" href="{{route('general.aboutUs')}}">about us</a></li>
           <li class="nav-item"><a class="nav-link" href="{{route('general.contactUs')}}">contact us</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">login </a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">register </a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">login </a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">register </a></li>
         </ul>
       </div>
     </div>
