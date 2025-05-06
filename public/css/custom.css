@@ -1,0 +1,76 @@
+
+
+.divider {
+    height: 4px;
+    background-color: #0dcaf0;
+    margin: 3rem 0;
+  }
+  
+  .overlay {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    height: 60vh;
+  }
+  
+  .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+  }
+  
+  .overlay > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .stats .col h2 {
+    font-size: 3rem;
+    color: #0dcaf0;
+  }
+  
+  .contact-info {
+    padding: 2rem 0;
+  }
+  
+  .footer-divider {
+    border-top: 3px solid #20c0c9;
+  }
+  
+/* — HERO FULL-SCREEN BANNER — */
+.about-hero {
+  background: url('/images/aboutHero.png') no-repeat center/cover;
+  height: 90vh;
+}
+.about-hero .banner-text {
+  max-width: 80%;
+}
+
+/* — ABOUT SECTION — */
+.about-section {
+  background-color: #1a1a2e;
+  color: #fff;
+}
+.about-section .about-img {
+  /* lift the image up a bit for overlap effect */
+  position: relative;
+  top: -60px;
+}
+
+/* — WHY CHOOSE US SECTION — */
+.why-section {
+  background-color: #e0f7fa;
+  color: #000;
+}
+
+/* — STATS GRID — */
+.stat-grid h2 {
+  font-size: 3rem;
+  color: #0dcaf0;
+}
+
+
+
+  
