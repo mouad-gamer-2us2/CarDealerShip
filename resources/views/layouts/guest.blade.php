@@ -25,11 +25,11 @@
         {{-- MAIN CONTENT (Frosted Glass Card) --}}
         <div class="relative z-10 min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
     
-            <div>
+          {{--}}  <div>
                 <a href="/">
                     <img src="{{ asset('images/carDealerLogo.png') }}" alt="Logo" class="w-20 h-20 object-contain" />
                 </a>
-            </div>
+            </div> {{--}}
     
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 frosted-glass">
                 {{ $slot }}
