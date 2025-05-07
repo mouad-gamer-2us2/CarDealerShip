@@ -81,3 +81,27 @@
   -webkit-backdrop-filter: blur(10px); /* compatibilité Safari */
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+body {
+  background-color: #f8f9fa;
+}
+
+
+.form-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+.form-section h2 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0d1b2a;
+}
+
+
+
+  
+  
+

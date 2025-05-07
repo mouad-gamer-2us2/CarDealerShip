@@ -20,6 +20,13 @@ Route::get('/contactUs',[GeneralController::class,'contactUs'])->name('general.c
 
 Route::get('/welcomeAdmin', [adminController::class,'welcomeAdmin'])->name('admin.welcomeAdmin');
 
+Route::post('/welcomeAdmin/storeBrand',[adminController::class , 'storeBrand'])->name('admin.storeBrand') ;
+
+Route::get('/adminBrandListing',[adminController::class , 'showAdminBrands'])->name('admin.showAdminBrands') ;
+
+Route::get('/brands/{id}/edit', [adminController::class, 'editBrand'])->name('brands.edit');
+
+Route::put('/brands/{id}', [adminController::class, 'updateBrand'])->name('brands.update');
 
 
 //--------------------------- buyer stuff --------------------------------------------------------

@@ -109,5 +109,5 @@
   <p class="h4 text-info">+212 6 28 43 06 57</p>
 </section>
 
-  <div class="divider"></div>
+
 </x-master1>

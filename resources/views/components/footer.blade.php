@@ -1,5 +1,5 @@
 
-<footer class="bg-light">
+<footer class="bg-light" style="border-top: 2px solid #20c0c9;">
     <div class="container py-5">
 
       <h5 class="fw-bold">Contact</h5>
