@@ -27,7 +27,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item text-white" href="/user-settings">
+              <a class="dropdown-item text-white" href="{{route('admin.showCars')}}">
                 <i class="bi bi-list-columns me-2"></i>all listings  
               </a>
             </li>

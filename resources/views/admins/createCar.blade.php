@@ -3,7 +3,7 @@
         <div class="form-section">
             <h2>List a New Car</h2>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{route('cars.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Make -->
@@ -57,7 +57,14 @@
                 <div class="row">
                     <div class="col-md-4 mb-3"><label class="form-label">Exterior Color</label><input type="text" name="exterior_color" class="form-control" required></div>
                     <div class="col-md-4 mb-3"><label class="form-label">Interior Color</label><input type="text" name="interior_color" class="form-control" required></div>
-                    <div class="col-md-4 mb-3"><label class="form-label">Condition</label><input type="text" name="condition" class="form-control" required></div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Condition</label>
+                        <select name="condition" class="form-select" required>
+                            <option value="new">New</option>
+                            <option value="used">Used</option>
+                        </select>
+                    </div>
+                    
                 </div>
 
                 <!-- Price & Description -->
@@ -97,7 +104,7 @@
 
                 <!-- Images -->
                 <div class="mb-3">
-                    <label class="form-label">Car Images</label>
+                    <label class="form-label">Car Images ( first image is highlighted )</label>
                     <div id="image-fields">
                         <div class="input-group mb-2">
                             <input type="file" name="images[]" class="form-control">

@@ -19,23 +19,23 @@
                             <td>{{ $body->body_type }}</td>
                             <td class="d-flex justify-content-center gap-2">
                                 <!-- Show Modal Button -->
-                                <button class="btn btn-outline-info btn-sm"
+                                <button class="btn btn-outline-primary btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#bodyModal{{ $body->body_id }}">
-                                    Show
+                                        <i class="bi bi-zoom-in m-3"></i>
                                 </button>
 
                                 <!-- Update Button -->
                                 <a href="{{route('bodies.edit',$body->body_id)}}"
                                    class="btn btn-outline-warning btn-sm">
-                                    Update
+                                   <i class="bi bi-pencil-square m-3"></i>
                                 </a>
 
                                 <!-- Delete Button -->
                                 <form action="{{ route('bodies.destroy', $body->body_id) }}" method="POST" class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3-fill m-3"></i></button>
                                 </form>
                                 
                             </td>

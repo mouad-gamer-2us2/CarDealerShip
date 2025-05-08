@@ -47,6 +47,9 @@ Route::get('/buyers', [adminController::class, 'showBuyers'])->name('admin.showB
 
 Route::get('/cars/createCar', [adminController::class, 'createCar'])->name('cars.create');
 
+Route::post('/cars/storeCar', [adminController::class, 'storeCar'])->name('cars.store');
+
+Route::get('/admin/cars', [adminController::class, 'showAllCars'])->name('admin.showCars');
 
 
 

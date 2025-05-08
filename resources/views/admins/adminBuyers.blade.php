@@ -19,10 +19,10 @@
                             <td>{{ $buyer->name }}</td>
                             <td>{{ $buyer->email }}</td>
                             <td>
-                                <button class="btn btn-outline-info btn-sm"
+                                <button class="btn btn-outline-primary btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#buyerModal{{ $buyer->id }}">
-                                    Show
+                                        <i class="bi bi-zoom-in m-3"></i>
                                 </button>
                             </td>
                         </tr>
