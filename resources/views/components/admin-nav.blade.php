@@ -22,13 +22,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
             <li>
-              <a class="dropdown-item text-white" href="{{route('admin.showAdminBrands')}}">
+              <a class="dropdown-item text-white" href="{{route('cars.create')}}">
                 <i class="bi bi-car-front-fill me-2"></i>list a car
               </a>
             </li>
             <li>
               <a class="dropdown-item text-white" href="/user-settings">
-                <i class="bi bi-person-gear me-2"></i>all listings  
+                <i class="bi bi-list-columns me-2"></i>all listings  
               </a>
             </li>
           </ul>
@@ -46,8 +46,13 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item text-white" href="/user-settings">
-                <i class="bi bi-person-gear me-2"></i>Users 
+              <a class="dropdown-item text-white" href="{{route('admin.showBodyStyles')}}">
+                <i class="bi bi-car-front-fill me-2"></i>Car body styles 
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-white" href="{{route('admin.showBuyers')}}">
+                <i class="bi bi-person-badge-fill me-2"></i>Users 
               </a>
             </li>
           </ul>

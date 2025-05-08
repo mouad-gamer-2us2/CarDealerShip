@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
+use App\Models\body;
 
+use App\Models\User;
 use App\Models\brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class adminController extends Controller
 {
-    public function welcomeAdmin()
+    public function welcomeAdmin(Request $request)
     {
+        
         return view('admins.welcomeAdmin') ;
     }
 
@@ -82,6 +85,65 @@ public function destroyBrand($id)
     return redirect()->route('admin.showAdminBrands')->with('success', 'Brand deleted successfully');
 }
 
+public function showBodyStyles ()
+{
+    $bodies = body::paginate(6); 
+    return view('admins.adminBodyStyles', compact('bodies'));
+}
 
+public function storeBodyStyles(Request $request)
+{
+    $formfields = $request->validate([
+        'body_type' => 'required|string|max:255|unique:bodies,body_type',
+        'body_description' => 'required|string|min:10',
+    ]);
 
+    body::create($formfields);
+
+    return redirect()->route('admin.showBodyStyles')->with('success', 'Body style added successfully');
+}
+
+public function destroyBodyStyle($id)
+{
+    $body = Body::findOrFail($id);
+    $body->delete(); 
+
+    return redirect()->route('admin.showBodyStyles')->with('success', 'Body style deleted successfully.');
+}
+
+public function editBodyStyle($id)
+{
+    $body = body::findOrFail($id);
+
+    return view('admins.editBodyStyle', compact('body'));
+}
+
+public function updateBodyStyle(Request $request, $id)
+{
+    $body = body::findOrFail($id);
+
+    $formfields = $request->validate([
+        'body_type' => 'required|string|max:255|unique:bodies,body_type,' . $body->body_id . ',body_id',
+        'body_description' => 'required|string|min:10',
+    ]);
+
+    $body->update($formfields);
+
+    return redirect()->route('admin.showBodyStyles')->with('success', 'Body style updated successfully.');
+}
+
+public function showBuyers()
+{
+    $buyers = User::where('role', 'buyer')->paginate(6);
+
+    return view('admins.adminBuyers', compact('buyers'));
+}
+
+public function createCar()
+{
+    $brands = brand::all();
+    $bodies = body::all();
+
+    return view('admins.createCar', compact('brands', 'bodies'));
+}
 }

@@ -18,7 +18,10 @@ Route::get('/contactUs',[GeneralController::class,'contactUs'])->name('general.c
 
  
 
-Route::get('/welcomeAdmin', [adminController::class,'welcomeAdmin'])->name('admin.welcomeAdmin');
+
+Route::match(['get', 'post'], '/welcomeAdmin', [adminController::class,'welcomeAdmin'])->name('admin.welcomeAdmin');
+
+
 
 Route::post('/welcomeAdmin/storeBrand',[adminController::class , 'storeBrand'])->name('admin.storeBrand') ;
 
@@ -29,6 +32,21 @@ Route::get('/brands/{id}/edit', [adminController::class, 'editBrand'])->name('br
 Route::put('/brands/{id}', [adminController::class, 'updateBrand'])->name('brands.update');
 
 Route::delete('/brands/{id}', [adminController::class, 'destroyBrand'])->name('brands.destroy');
+
+Route::get('/bodyStyles', [adminController::class, 'showBodyStyles'])->name('admin.showBodyStyles');
+
+Route::post('/bodyStyles/store', [AdminController::class, 'storeBodyStyles'])->name('bodies.store');
+
+Route::delete('/bodyStyles/{id}', [adminController::class, 'destroyBodyStyle'])->name('bodies.destroy');
+
+Route::get('/bodyStyles/{id}/edit', [adminController::class, 'editBodyStyle'])->name('bodies.edit');
+
+Route::put('/bodyStyles/{id}', [adminController::class, 'updateBodyStyle'])->name('bodies.update');
+
+Route::get('/buyers', [adminController::class, 'showBuyers'])->name('admin.showBuyers');
+
+Route::get('/cars/createCar', [adminController::class, 'createCar'])->name('cars.create');
+
 
 
 
