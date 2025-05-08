@@ -5,7 +5,7 @@
     <!-- Body Style Form -->
     <div class="form-section mb-4">
       <h2>Add Body Style</h2>
-      <form action="/body-style/store" method="POST" enctype="multipart/form-data">
+      <form action="" method="POST" >
         @csrf
         <div class="mb-3">
           <label for="bodyName" class="form-label">Name</label>
@@ -14,10 +14,6 @@
         <div class="mb-3">
           <label for="bodyDescription" class="form-label">Description</label>
           <textarea class="form-control" id="bodyDescription" name="description" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="bodyLogo" class="form-label">Logo</label>
-          <input class="form-control" type="file" id="bodyLogo" name="logo" required>
         </div>
         <button type="submit" class="btn btn-primary">Add</button>
       </form>

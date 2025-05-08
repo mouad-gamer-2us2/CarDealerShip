@@ -28,6 +28,9 @@ Route::get('/brands/{id}/edit', [adminController::class, 'editBrand'])->name('br
 
 Route::put('/brands/{id}', [adminController::class, 'updateBrand'])->name('brands.update');
 
+Route::delete('/brands/{id}', [adminController::class, 'destroyBrand'])->name('brands.destroy');
+
+
 
 //--------------------------- buyer stuff --------------------------------------------------------
 

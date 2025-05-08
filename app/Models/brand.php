@@ -22,4 +22,9 @@ class brand extends Model
         'brand_description',
         'brand_logo',
     ];
+
+    public function cars()
+    {
+        return $this->hasMany(Car::class, 'make', 'brand_id');
+    }
 }

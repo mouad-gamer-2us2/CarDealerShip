@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\brand;
 use Illuminate\Http\Request;
 
@@ -65,5 +67,21 @@ public function updateBrand(Request $request, $id)
 
     return redirect()->route('admin.showAdminBrands')->with('success', 'Brand updated successfully');
 }
+
+public function destroyBrand($id)
+{
+    $brand = Brand::findOrFail($id);
+
+    
+    if ($brand->brand_logo && Storage::disk('public')->exists($brand->brand_logo)) {
+        Storage::disk('public')->delete($brand->brand_logo);
+    }
+
+    $brand->delete(); 
+
+    return redirect()->route('admin.showAdminBrands')->with('success', 'Brand deleted successfully');
+}
+
+
 
 }

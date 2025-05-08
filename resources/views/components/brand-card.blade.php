@@ -23,7 +23,7 @@
             <a href="{{route('brands.edit',$brand->brand_id)}}" class="btn btn-outline-warning btn-sm">Update</a>
 
             <!-- Delete -->
-            <form action="" method="POST" onsubmit="return confirm('Delete this brand?');">
+            <form action="{{ route('brands.destroy', $brand->brand_id) }}" method="POST" onsubmit="return confirm('Delete this brand?');">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
