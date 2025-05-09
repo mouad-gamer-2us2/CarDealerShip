@@ -51,7 +51,27 @@ Route::post('/cars/storeCar', [adminController::class, 'storeCar'])->name('cars.
 
 Route::get('/admin/cars', [adminController::class, 'showAllCars'])->name('admin.showCars');
 
+Route::get('/cars/{id}', [adminController::class, 'showCar'])->name('cars.show');
 
+Route::delete('/cars/{id}', [adminController::class, 'destroyCar'])->name('cars.destroy');
+
+Route::post('/cars/{car}/photos', [adminController::class, 'storePhoto'])->name('photos.store');
+
+Route::post('/cars/{car}/equipements', [adminController::class, 'storeEquipement'])->name('equipements.store');
+
+Route::post('/cars/{car}/items', [adminController::class, 'storeItem'])->name('items.store');
+
+Route::put('/items/{item}', [adminController::class, 'updateItem'])->name('items.update');
+
+Route::put('/equipements/{id}', [adminController::class, 'updateEquipement'])->name('equipements.update');
+
+Route::put('/cars/{id}/updateFields', [adminController::class, 'updateCarFields'])->name('cars.updateFields');
+
+Route::delete('/photos/{id}', [adminController::class, 'destroyPhoto'])->name('photos.destroy');
+
+Route::delete('/items/{id}', [adminController::class, 'destroyItem'])->name('items.destroy');
+
+Route::delete('/equipements/{id}', [adminController::class, 'destroyEquipement'])->name('equipements.destroy');
 
 //--------------------------- buyer stuff --------------------------------------------------------
 

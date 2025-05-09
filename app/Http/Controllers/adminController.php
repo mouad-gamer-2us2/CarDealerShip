@@ -172,7 +172,7 @@ public function storeCar(Request $request)
         'price' => 'required|numeric|min:0',
         'car_description' => 'required|string|min:10',
         'modified' => 'required|boolean',
-        'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|max:5',
     ]);
 
     
@@ -231,7 +231,7 @@ public function storeCar(Request $request)
         }
     }
 
-    return redirect()->route('cars.create')->with('success', 'Car listed successfully!');
+    return redirect()->route('admin.showCars')->with('success', 'Car listed successfully!');
 }
 
 public function showAllCars()
@@ -240,5 +240,165 @@ public function showAllCars()
 
     return view('admins.adminCarList', compact('cars'));
 }
+
+public function showCar($id)
+{
+    $car = Car::with(['brand', 'body', 'photos', 'equipements', 'items'])->findOrFail($id);
+
+    return view('admins.adminCarDetails', compact('car'));
+}
+
+public function destroyCar($id)
+{
+    $car = Car::findOrFail($id);
+
+   
+    foreach ($car->photos as $photo) {
+        if (Storage::disk('public')->exists($photo->image)) {
+            Storage::disk('public')->delete($photo->image);
+        }
+        $photo->delete(); 
+    }
+
+    
+    $car->items()->delete();
+    $car->equipements()->delete();
+
+    
+    $car->delete();
+
+    return redirect()->route('admin.showCars')->with('success', 'Car deleted successfully.');
+}
+
+public function storePhoto(Request $request, $carId)
+{
+    $request->validate([
+        'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
+    $car = car::findOrFail($carId);
+
+    foreach ($request->file('images') as $image) {
+        $path = $image->store('cars', 'public');
+        photo::create([
+            'image' => $path,
+            'car_image' => $car->car_id,
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Photos added successfully!');
+}
+
+public function storeEquipement(Request $request, $carId)
+{
+    $request->validate([
+        'equipements' => 'required|array',
+        'equipements.*' => 'required|string|max:255',
+    ]);
+
+    foreach ($request->equipements as $name) {
+        equipement::create([
+            'equipement_name' => $name,
+            'car_eq' => $carId,
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Equipment(s) added successfully.');
+}
+
+public function storeItem(Request $request, $carId)
+{
+    $request->validate([
+        'items' => 'required|array',
+        'items.*' => 'required|string|max:255',
+    ]);
+
+    foreach ($request->items as $itemName) {
+        item::create([
+            'item_name' => $itemName,
+            'car_it' => $carId,
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Item(s) added successfully.');
+}
+
+public function updateItem(Request $request, $id)
+{
+    $request->validate([
+        'item_name' => 'required|string|max:255',
+    ]);
+
+    $item = item::findOrFail($id);
+    $item->update(['item_name' => $request->item_name]);
+
+    return redirect()->back()->with('success', 'Item updated successfully.');
+}
+
+public function updateEquipement(Request $request, $id)
+{
+    $equipement = equipement::findOrFail($id);
+
+    $request->validate([
+        'equipement_name' => 'required|string|max:255',
+    ]);
+
+    $equipement->update([
+        'equipement_name' => $request->equipement_name,
+    ]);
+
+    return redirect()->back()->with('success', 'Equipement updated successfully.');
+}
+
+
+public function updateCarFields(Request $request, $id)
+{
+    $car = car::findOrFail($id);
+
+    $validated = $request->validate([
+        'model' => 'required|string|max:255',
+        'engine' => 'required|string|max:255',
+        'drivetrain' => 'required|string|max:255',
+        'transmission' => 'required|string|max:255',
+        'horsepower' => 'required|integer',
+        'mileage' => 'required|integer',
+        'vin' => 'required|string|unique:cars,vin,' . $car->car_id . ',car_id',
+        'exterior_color' => 'required|string|max:255',
+        'interior_color' => 'required|string|max:255',
+        'condition' => 'required|in:new,used',
+    ]);
+
+    $car->update($validated);
+
+    return redirect()->back()->with('success', 'Car details updated successfully!');
+}
+
+public function destroyPhoto($id)
+{
+    $photo = photo::findOrFail($id);
+    if (Storage::disk('public')->exists($photo->image)) {
+        Storage::disk('public')->delete($photo->image);
+    }
+    $photo->delete();
+
+    return redirect()->back()->with('success', 'Photo deleted successfully.');
+}
+
+public function destroyItem($id)
+{
+    $item = item::findOrFail($id);
+    $item->delete();
+
+    return redirect()->back()->with('success', 'Item deleted successfully.');
+}
+
+public function destroyEquipement($id)
+{
+    $equipement = equipement::findOrFail($id);
+    $equipement->delete();
+
+    return redirect()->back()->with('success', 'Equipment deleted successfully.');
+}
+
 
 }
