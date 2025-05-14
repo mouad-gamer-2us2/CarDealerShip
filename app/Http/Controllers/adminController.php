@@ -145,6 +145,20 @@ public function showBuyers()
     return view('admins.adminBuyers', compact('buyers'));
 }
 
+public function searchBuyers(Request $request)
+{
+    $term = $request->term;
+
+    $buyers = User::where('role', 'buyer')
+                ->where(function ($query) use ($term) {
+                    $query->where('name', 'like', "%{$term}%")
+                          ->orWhere('email', 'like', "%{$term}%");
+                })
+                ->paginate(6);
+
+    return view('partials.buyer.buyer_results', compact('buyers'))->render();
+}
+
 public function createCar()
 {
     $brands = brand::all();
@@ -172,7 +186,7 @@ public function storeCar(Request $request)
         'price' => 'required|numeric|min:0',
         'car_description' => 'required|string|min:10',
         'modified' => 'required|boolean',
-        'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|max:5',
+        'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
     
@@ -236,9 +250,35 @@ public function storeCar(Request $request)
 
 public function showAllCars()
 {
-    $cars = car::with(['brand', 'photos'])->paginate(6); 
+    $cars = car::with(['brand', 'photos'])   
+                ->where('status', '!=', 'sold')  
+                ->paginate(6);
 
     return view('admins.adminCarList', compact('cars'));
+}
+
+public function searchAvailableCars(Request $request)
+{
+    $term = $request->term;
+
+    $cars = Car::with(['brand', 'photos', 'body'])
+        ->where('status', 'available')
+        ->where(function ($query) use ($term) {
+            $query->whereHas('brand', fn($q) => $q->where('brand_name', 'like', "%{$term}%"))
+                  ->orWhere('model', 'like', "%{$term}%")
+                  ->orWhere('engine', 'like', "%{$term}%")
+                  ->orWhere('vin', 'like', "%{$term}%")
+                  ->orWhere('transmission', 'like', "%{$term}%")
+                  ->orWhere('drivetrain', 'like', "%{$term}%")
+                  ->orWhere('horsepower', 'like', "%{$term}%")
+                  ->orWhere('mileage', 'like', "%{$term}%")
+                  ->orWhere('exterior_color', 'like', "%{$term}%")
+                  ->orWhere('interior_color', 'like', "%{$term}%")
+                  ->orWhere('condition', 'like', "%{$term}%");
+        })
+        ->paginate(6);
+
+    return view('partials.car.available_results', compact('cars'))->render();
 }
 
 public function showCar($id)
@@ -398,6 +438,93 @@ public function destroyEquipement($id)
     $equipement->delete();
 
     return redirect()->back()->with('success', 'Equipment deleted successfully.');
+}
+
+public function updateDescription(Request $request, $id)
+{
+    $request->validate([
+        'car_description' => 'required|string|min:10',
+    ]);
+
+    $car = car::findOrFail($id);
+    $car->update(['car_description' => $request->car_description]);
+
+    return redirect()->back()->with('success', 'Description updated successfully.');
+}
+
+public function updatePrice(Request $request, $id)
+{
+    $request->validate([
+        'price' => 'required|numeric|min:0',
+    ]);
+
+    $car = car::findOrFail($id);
+    $car->update(['price' => $request->price]);
+
+    return redirect()->back()->with('success', 'Price updated successfully.');
+}
+
+
+
+public function showSellCarForm($id)
+{
+    $car = Car::findOrFail($id);
+    return view('admins.sellCar', compact('car'));
+}
+
+public function sellCarToBuyer(Request $request, $id)
+{
+    $request->validate([
+        'buyer_id' => 'required|exists:users,id',
+    ]);
+
+    $car = Car::findOrFail($id);
+    $car->bought_by = $request->buyer_id;
+    $car->status = 'sold';
+    $car->save();
+
+    return redirect()->route('admin.showCars')->with('success', 'Car sold successfully.');
+}
+
+public function showSoldCars()
+{
+    return view('admins.soldCars'); 
+}
+
+public function searchSoldCars(Request $request)
+{
+    $query = car::with(['brand', 'body', 'photos'])
+        ->where('status', 'sold');
+
+    if ($request->has('term')) {
+        $term = $request->term;
+        $query->where(function ($q) use ($term) {
+            $q->where('model', 'like', "%$term%")
+              ->orWhere('engine', 'like', "%$term%")
+              ->orWhere('transmission', 'like', "%$term%")
+              ->orWhere('drivetrain', 'like', "%$term%")
+              ->orWhere('vin', 'like', "%$term%")
+              ->orWhere('exterior_color', 'like', "%$term%")
+              ->orWhere('interior_color', 'like', "%$term%")
+              ->orWhere('condition', 'like', "%$term%")
+              ->orWhereHas('brand', fn($b) => $b->where('brand_name', 'like', "%$term%"))
+              ->orWhereHas('body', fn($b) => $b->where('body_type', 'like', "%$term%"));
+        });
+    }
+
+    $cars = $query->get();
+
+    return view('partials.car.sold_results', compact('cars'))->render();
+}
+
+public function makeCarAvailable($id)
+{
+    $car = Car::findOrFail($id);
+    $car->status = 'available';
+    $car->bought_by = null;
+    $car->save();
+
+    return redirect()->back()->with('success', 'Car marked as available.');
 }
 
 

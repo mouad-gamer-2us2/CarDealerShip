@@ -16,15 +16,15 @@
             <strong>Price:</strong> ${{ number_format($car->price, 2) }}
         </p>
 
-        <div class="d-flex justify-content-center gap-2 mt-3">
-            <a href="{{route('cars.show',$car->car_id)}}" class="btn btn-outline-primary btn-sm"><i class="bi bi-zoom-in m-3"></i></a>
-            
-            <form action="{{ route('cars.destroy', $car->car_id) }}" method="POST" class="delete-form">
+        <div class="d-flex justify-content-center mt-3">
+            <form action="{{ route('cars.makeAvailable', $car->car_id) }}" method="POST" class="me-2">
                 @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3-fill m-3"></i></button>
+                @method('PUT')
+                <button type="submit" class="btn btn-outline-warning btn-sm w-100">
+                    <i class="bi bi-arrow-repeat me-1"></i> Make Available
+                </button>
             </form>
-            <a href="{{ route('cars.sell', $car->car_id) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-currency-dollar m-3"></i></a>
         </div>
+
     </div>
 </div>

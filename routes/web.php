@@ -5,6 +5,8 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\buyerController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 //--------------------------- general stuff -----------------------------------------------------
 
@@ -45,11 +47,15 @@ Route::put('/bodyStyles/{id}', [adminController::class, 'updateBodyStyle'])->nam
 
 Route::get('/buyers', [adminController::class, 'showBuyers'])->name('admin.showBuyers');
 
+Route::get('/buyers/search', [adminController::class, 'searchBuyers'])->name('buyers.search');
+
 Route::get('/cars/createCar', [adminController::class, 'createCar'])->name('cars.create');
 
 Route::post('/cars/storeCar', [adminController::class, 'storeCar'])->name('cars.store');
 
 Route::get('/admin/cars', [adminController::class, 'showAllCars'])->name('admin.showCars');
+
+Route::get('/cars/search/available', [adminController::class, 'searchAvailableCars'])->name('cars.available.search');
 
 Route::get('/cars/{id}', [adminController::class, 'showCar'])->name('cars.show');
 
@@ -72,6 +78,36 @@ Route::delete('/photos/{id}', [adminController::class, 'destroyPhoto'])->name('p
 Route::delete('/items/{id}', [adminController::class, 'destroyItem'])->name('items.destroy');
 
 Route::delete('/equipements/{id}', [adminController::class, 'destroyEquipement'])->name('equipements.destroy');
+
+Route::put('/cars/{id}/update-description', [adminController::class, 'updateDescription'])->name('cars.updateDescription');
+
+Route::put('/cars/{id}/update-price', [adminController::class, 'updatePrice'])->name('cars.updatePrice');
+
+Route::get('/cars/{id}/sell', [adminController::class, 'showSellCarForm'])->name('cars.sell.form');
+
+Route::put('/cars/{id}/sell', [adminController::class, 'sellCarToBuyer'])->name('cars.sell');
+
+
+
+Route::get('/api/users/search', function (Request $request) {
+    $query = $request->q;
+
+    return User::where('role', 'buyer') 
+                ->where(function ($q) use ($query) {
+                    $q->where('name', 'like', "%{$query}%")
+                      ->orWhere('email', 'like', "%{$query}%");
+                })
+                ->select('id', 'name', 'email')
+                ->limit(10)
+                ->get();
+});
+
+Route::get('/admin/sold-cars', [adminController::class, 'showSoldCars'])->name('cars.sold');
+
+Route::get('/admin/sold-cars/search', [adminController::class, 'searchSoldCars'])->name('cars.sold.search');
+
+Route::put('/cars/{id}/make-available', [adminController::class, 'makeCarAvailable'])->name('cars.makeAvailable');
+
 
 //--------------------------- buyer stuff --------------------------------------------------------
 

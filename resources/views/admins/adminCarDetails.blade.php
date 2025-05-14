@@ -6,7 +6,7 @@
                 {{ $car->brand->brand_name ?? 'Unknown Brand' }} {{ $car->model }}
             </h2>
             <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#editFieldsModal">
-                <i class="bi bi-pencil-square me-1"></i>Edit Details
+                <i class="bi bi-pencil-square me-1"></i>Edit All car details
             </button>
         </div>
 
@@ -20,7 +20,7 @@
                             @if($key !== 0)
                                 <form action="{{ route('photos.destroy', $photo->id_photo) }}" method="POST" class="text-center delete-form mt-2">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete an Image</button>
                                 </form>
                             @endif
                         </div>
@@ -39,7 +39,13 @@
         <button class="btn btn-outline-primary btn-sm mb-4" data-bs-toggle="modal" data-bs-target="#addPhotoModal">+ Add Image</button>
 
         <!-- Price -->
-        <h3 class="text-info fw-bold">Price: ${{ number_format($car->price, 2) }}</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-info fw-bold">Price: ${{ number_format($car->price, 2) }}</h3>
+            <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#editPriceModal">
+                <i class="bi bi-pencil-square"></i> Edit price
+            </button>
+        </div>
+
 
         <!-- Info Table -->
         <table class="table table-striped mt-4">
@@ -61,9 +67,15 @@
 
         <!-- Description -->
         <div class="mt-4">
-            <h5>Description</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Description</h5>
+                <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#editDescriptionModal">
+                    <i class="bi bi-pencil-square"></i> Edit Description
+                </button>
+            </div>
             <p>{{ $car->car_description }}</p>
         </div>
+
 
         <!-- Equipments -->
         <div class="mt-4">
@@ -120,5 +132,8 @@
         @include('partials.car.modals.edit_fields', ['car' => $car])
         @include('partials.car.modals.edit_equipements', ['car' => $car])
         @include('partials.car.modals.edit_items', ['car' => $car])
+        @include('partials.car.modals.edit_description', ['car' => $car])
+        @include('partials.car.modals.edit_price', ['car' => $car])
+
     </div>
 </x-admin-layout>
