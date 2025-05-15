@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
             if ($user->role === 'admin') {
                 return redirect()->route('admin.showAdminBrands');
             } elseif ($user->role === 'buyer') {
-                return redirect()->route('buyer.welcomeBuyer');
+                return redirect()->route('Brand');
             }
     
             // default fallback

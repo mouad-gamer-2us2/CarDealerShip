@@ -75,7 +75,12 @@ Route::delete('/equipements/{id}', [adminController::class, 'destroyEquipement']
 
 //--------------------------- buyer stuff --------------------------------------------------------
 
-Route::get('/welcomeBuyer', [buyerController::class,'welcomeBuyer'])->name('buyer.welcomeBuyer');
+Route::get('/Brands', [buyerController::class,'showBrand'])->name('Brand');
+Route::get('/Cars', [buyerController::class,'showCar'])->name('Car');
+Route::get('/cars/{id}', [buyerController::class, 'show'])->name('seulCar');
+Route::get('/CarsBrand', [buyerController::class,'showCarBrand'])->name('CarBrand');
+
+
 
 //---------------------------- auth stuff --------------------------------------------------------
 Route::get('/dashboard', function () {
