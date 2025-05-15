@@ -21,17 +21,23 @@
             Listings
           </a>
           <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
-            <li>
-              <a class="dropdown-item text-white" href="{{route('cars.create')}}">
-                <i class="bi bi-car-front-fill me-2"></i>list a car
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item text-white" href="{{route('admin.showCars')}}">
-                <i class="bi bi-list-columns me-2"></i>all listings  
-              </a>
-            </li>
-          </ul>
+              <li>
+                <a class="dropdown-item text-white" href="{{ route('cars.create') }}">
+                  <i class="bi bi-car-front-fill me-2"></i>List a Car
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-white" href="{{ route('admin.showCars') }}">
+                  <i class="bi bi-list-columns me-2"></i>All Listings
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-white" href="{{ route('cars.sold') }}">
+                  <i class="bi bi-currency-dollar me-2"></i>Sold Cars
+                </a>
+              </li>
+            </ul>
+
         </li>
 
         {{--listings drop down --}}
@@ -69,7 +75,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item text-white" href="/user-settings">
+              <a class="dropdown-item text-white" href="{{ route('profile.edit') }}">
                 <i class="bi bi-person-gear me-2"></i>update your informations 
               </a>
             </li>

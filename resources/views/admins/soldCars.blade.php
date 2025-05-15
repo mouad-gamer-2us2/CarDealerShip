@@ -1,13 +1,13 @@
-<x-admin-layout title="Car Listings">
+<x-admin-layout title="Sold Cars">
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h2 class="fw-bold text-uppercase">Car Listings</h2>
-            <p class="text-muted">Browse all available cars. Use the search to filter by model, engine, VIN, etc.</p>
+            <h2 class="fw-bold text-uppercase">Sold Cars</h2>
+            <p class="text-muted">Browse all sold vehicles. Use the search to filter by model, engine, VIN, etc.</p>
         </div>
 
         <!-- Search Bar -->
         <div class="input-group mb-4 shadow-sm">
-            <span class="input-group-text bg-primary text-white"><i class="bi bi-search"></i></span>
+            <span class="input-group-text bg-info text-white"><i class="bi bi-search"></i></span>
             <input type="text" id="search" class="form-control form-control-lg" placeholder="Search by any field..." autocomplete="off">
         </div>
 
@@ -15,7 +15,7 @@
         <div id="car-results">
             {{-- Cards will load here via AJAX --}}
             <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status">
+                <div class="spinner-border text-info" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
@@ -29,7 +29,7 @@
             const resultsContainer = document.getElementById('car-results');
 
             const fetchResults = (term = '') => {
-                fetch(`{{ route('cars.available.search') }}?term=${encodeURIComponent(term)}`)
+                fetch(`{{ route('cars.sold.search') }}?term=${encodeURIComponent(term)}`)
                     .then(res => res.text())
                     .then(html => resultsContainer.innerHTML = html);
             };
