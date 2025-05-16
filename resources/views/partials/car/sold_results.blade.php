@@ -6,8 +6,13 @@
             </div>
         @endforeach
     </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        {{ $cars->links() }}
+    </div>
 @else
     <div class="alert alert-info text-center">
         No sold cars found.
     </div>
 @endif
+

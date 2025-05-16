@@ -1,12 +1,15 @@
 <?php
 
+use App\Models\car;
+use App\Models\User;
+use App\Mail\NewCarListed;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\buyerController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Http\Request;
-use App\Models\User;
 
 //--------------------------- general stuff -----------------------------------------------------
 
@@ -16,9 +19,18 @@ Route::get('/aboutUs',[GeneralController::class,'aboutUs'])->name('general.about
 
 Route::get('/contactUs',[GeneralController::class,'contactUs'])->name('general.contactUs') ;
 
+
+// test the email with this : 
+
+ Route::get('/test-mail', function () {
+    $car = car::latest()->with('brand')->first(); // any car
+    Mail::to('hman3787@gmail.com')->send(new NewCarListed($car));
+    return 'Test email sent.';
+});
+
 //--------------------------- admin stuff --------------------------------------------------------
 
- 
+
 
 
 Route::match(['get', 'post'], '/welcomeAdmin', [adminController::class,'welcomeAdmin'])->name('admin.welcomeAdmin');
@@ -28,6 +40,9 @@ Route::match(['get', 'post'], '/welcomeAdmin', [adminController::class,'welcomeA
 Route::post('/welcomeAdmin/storeBrand',[adminController::class , 'storeBrand'])->name('admin.storeBrand') ;
 
 Route::get('/adminBrandListing',[adminController::class , 'showAdminBrands'])->name('admin.showAdminBrands') ;
+
+Route::get('/admin/brands/search', [adminController::class, 'searchBrands'])->name('brands.search');
+
 
 Route::get('/brands/{id}/edit', [adminController::class, 'editBrand'])->name('brands.edit');
 
@@ -49,11 +64,15 @@ Route::get('/buyers', [adminController::class, 'showBuyers'])->name('admin.showB
 
 Route::get('/buyers/search', [adminController::class, 'searchBuyers'])->name('buyers.search');
 
+Route::delete('/buyers/{id}', [adminController::class, 'destroyBuyer'])->name('buyers.destroy');
+
 Route::get('/cars/createCar', [adminController::class, 'createCar'])->name('cars.create');
 
 Route::post('/cars/storeCar', [adminController::class, 'storeCar'])->name('cars.store');
 
 Route::get('/admin/cars', [adminController::class, 'showAllCars'])->name('admin.showCars');
+
+
 
 Route::get('/cars/search/available', [adminController::class, 'searchAvailableCars'])->name('cars.available.search');
 
@@ -113,7 +132,7 @@ Route::put('/cars/{id}/make-available', [adminController::class, 'makeCarAvailab
 
 Route::get('/Brands', [buyerController::class,'showBrand'])->name('Brand');
 Route::get('/Cars', [buyerController::class,'showCar'])->name('Car');
-Route::get('/cars/{id}', [buyerController::class, 'show'])->name('seulCar');
+Route::get('/buyer/cars/{id}', [buyerController::class, 'show'])->name('seulCar');
 Route::get('/CarsBrand', [buyerController::class,'showCarBrand'])->name('CarBrand');
 
 

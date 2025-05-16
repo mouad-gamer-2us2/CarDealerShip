@@ -105,7 +105,19 @@ body {
     filter: brightness(0); 
 }
 
+.image-container {
+    overflow: hidden;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
 
+.zoom-image {
+    transition: transform 0.4s ease;
+}
+
+.image-container:hover .zoom-image {
+    transform: scale(1.05);
+}
   
   
 

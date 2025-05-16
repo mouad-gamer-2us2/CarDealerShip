@@ -1,10 +1,12 @@
 @props(['car'])
 
-<div class="card h-100 shadow-sm ">
-    <img src="{{ asset('storage/' . $car->photos->first()?->image) }}" 
-         alt="Car Image" 
-         class="card-img-top img-fluid" 
-         style="object-fit: cover; height: 250px;">
+<div class="card h-100 shadow-sm">
+    <div class="image-container">
+        <img src="{{ asset('storage/' . $car->photos->first()?->image) }}" 
+             alt="Car Image" 
+             class="card-img-top img-fluid zoom-image" 
+             style="object-fit: cover; height: 250px;">
+    </div>
 
     <div class="card-body">
         <h5 class="card-title">{{ $car->brand->brand_name }}</h5>
@@ -17,12 +19,13 @@
         </p>
 
         <div class="d-flex justify-content-center gap-2 mt-3">
-            <a href="{{route('cars.show',$car->car_id)}}" class="btn btn-outline-primary btn-sm"><i class="bi bi-zoom-in m-3"></i></a>
-            
+            <a href="{{ route('cars.show', $car->car_id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-zoom-in m-3"></i></a>
             <form action="{{ route('cars.destroy', $car->car_id) }}" method="POST" class="delete-form">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3-fill m-3"></i></button>
+                <button type="button" class="btn btn-outline-danger btn-sm btn-delete-car">
+                    <i class="bi bi-trash3-fill m-3"></i>
+                </button>
             </form>
             <a href="{{ route('cars.sell', $car->car_id) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-currency-dollar m-3"></i></a>
         </div>

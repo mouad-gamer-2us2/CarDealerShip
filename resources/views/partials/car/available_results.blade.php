@@ -8,7 +8,7 @@
     </div>
 
     <div class="d-flex justify-content-end mt-4">
-        {{ $cars->links() }}
+        {!! $cars->withQueryString()->links() !!}
     </div>
 @else
     <div class="alert alert-warning text-center">No available cars match your search.</div>

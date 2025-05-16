@@ -7,17 +7,13 @@
 
         <!-- Search Bar -->
         <div class="input-group mb-4 shadow-sm">
-            <span class="input-group-text bg-info text-white"><i class="bi bi-search"></i></span>
+            <span class="input-group-text bg-dark text-white"><i class="bi bi-search"></i></span>
             <input type="text" id="search-buyer" class="form-control form-control-lg" placeholder="Search buyers..." autocomplete="off">
         </div>
 
         <!-- Results Area -->
         <div id="buyer-results">
-            <div class="text-center py-5">
-                <div class="spinner-border text-info" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
+            @include('partials.buyer.buyer_results', ['buyers' => $buyers])
         </div>
     </div>
 
@@ -39,5 +35,49 @@
 
             fetchBuyers(); // initial load
         });
+
+        // SweetAlert Delete Confirmation
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('btn-delete-user')) {
+                e.preventDefault();
+                const form = e.target.closest('form');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This user will be permanently deleted!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            }
+        });
     </script>
+
+    <script>
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.btn-delete-user')) {
+            e.preventDefault();
+            const form = e.target.closest('form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This buyer will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    });
+</script>
+
 </x-admin-layout>

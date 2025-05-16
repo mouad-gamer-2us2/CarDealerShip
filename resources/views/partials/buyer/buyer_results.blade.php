@@ -15,15 +15,25 @@
                     <td>{{ $buyer->name }}</td>
                     <td>{{ $buyer->email }}</td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm"
+                        <!-- Show Button -->
+                        <button class="btn btn-outline-primary btn-sm me-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#buyerModal{{ $buyer->id }}">
-                                <i class="bi bi-zoom-in m-3"></i>
+                            <i class="bi bi-zoom-in"></i>
                         </button>
+
+                        <!-- Delete Form -->
+                        <form method="POST" action="{{ route('buyers.destroy', $buyer->id) }}" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn btn-outline-danger btn-sm btn-delete-user">
+                                <i class="bi bi-trash"></i> 
+                            </button>
+                        </form>
                     </td>
                 </tr>
 
-                <!-- Modal -->
+                <!-- Buyer Modal -->
                 <div class="modal fade" id="buyerModal{{ $buyer->id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content text-start">

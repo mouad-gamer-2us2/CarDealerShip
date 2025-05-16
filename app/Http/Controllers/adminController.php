@@ -9,10 +9,12 @@ use App\Models\item;
 use App\Models\User;
 use App\Models\brand;
 use App\Models\photo;
+use App\Mail\NewCarListed;
 use App\Models\equipement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 
 class adminController extends Controller
@@ -50,6 +52,18 @@ class adminController extends Controller
 
         return view('admins.adminBrandListing',compact('brands'));
     }
+
+    public function searchBrands(Request $request)
+{
+    $term = $request->term;
+
+    $brands = brand::where('brand_name', 'like', "%{$term}%")
+                    ->orWhere('brand_description', 'like', "%{$term}%")
+                    ->paginate(6);
+
+    return view('partials.brand.brand_results', compact('brands'))->render();
+}
+
 
     public function editBrand($id)
 {
@@ -159,6 +173,17 @@ public function searchBuyers(Request $request)
     return view('partials.buyer.buyer_results', compact('buyers'))->render();
 }
 
+public function destroyBuyer($id)
+{
+    $buyer = User::findOrFail($id);
+    if ($buyer->role === 'buyer') {
+        $buyer->delete();
+        return back()->with('success', 'Buyer deleted successfully.');
+    }
+
+    return back()->with('error', 'Invalid operation. Only buyers can be deleted.');
+}
+
 public function createCar()
 {
     $brands = brand::all();
@@ -166,6 +191,7 @@ public function createCar()
 
     return view('admins.createCar', compact('brands', 'bodies'));
 }
+
 
 public function storeCar(Request $request)
 {
@@ -189,7 +215,7 @@ public function storeCar(Request $request)
         'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
-    
+    // 2. Create the car
     $car = car::create([
         'make' => $request->make,
         'model' => $request->model,
@@ -210,31 +236,31 @@ public function storeCar(Request $request)
         'listed_by' => Auth::id(),
     ]);
 
-    // 3. Enregistrer les équipements
+    // 3. Save Equipments
     if ($request->has('equipements')) {
-        foreach ($request->equipements as $equipement) {
-            if ($equipement) {
+        foreach ($request->equipements as $equipement_name) {
+            if ($equipement_name) {
                 equipement::create([
-                    'equipement_name' => $equipement,
+                    'equipement_name' => $equipement_name,
                     'car_eq' => $car->car_id,
                 ]);
             }
         }
     }
 
-    // 4. Enregistrer les items
+    // 4. Save Items
     if ($request->has('items')) {
-        foreach ($request->items as $item) {
-            if ($item) {
+        foreach ($request->items as $item_name) {
+            if ($item_name) {
                 item::create([
-                    'item_name' => $item,
+                    'item_name' => $item_name,
                     'car_it' => $car->car_id,
                 ]);
             }
         }
     }
 
-    // 5. Enregistrer les images
+    // 5. Save Images
     if ($request->hasFile('images')) {
         foreach ($request->file('images') as $image) {
             $path = $image->store('cars', 'public');
@@ -245,8 +271,15 @@ public function storeCar(Request $request)
         }
     }
 
-    return redirect()->route('admin.showCars')->with('success', 'Car listed successfully!');
+    // 6. Notify all buyers by email
+    $buyers = User::where('role', 'buyer')->pluck('email');
+    foreach ($buyers as $email) {
+        Mail::to($email)->send(new NewCarListed($car));
+    }
+
+    return redirect()->route('admin.showCars')->with('success', 'Car listed successfully and buyers notified!');
 }
+
 
 public function showAllCars()
 {
@@ -488,12 +521,17 @@ public function sellCarToBuyer(Request $request, $id)
 
 public function showSoldCars()
 {
-    return view('admins.soldCars'); 
+    $cars = Car::with(['brand', 'body', 'photos'])
+        ->where('status', 'sold')
+        ->paginate(6); 
+
+    return view('admins.soldCars', compact('cars')); 
 }
+
 
 public function searchSoldCars(Request $request)
 {
-    $query = car::with(['brand', 'body', 'photos'])
+    $query = Car::with(['brand', 'body', 'photos'])
         ->where('status', 'sold');
 
     if ($request->has('term')) {
@@ -512,10 +550,12 @@ public function searchSoldCars(Request $request)
         });
     }
 
-    $cars = $query->get();
+    
+    $cars = $query->paginate(6);
 
     return view('partials.car.sold_results', compact('cars'))->render();
 }
+
 
 public function makeCarAvailable($id)
 {

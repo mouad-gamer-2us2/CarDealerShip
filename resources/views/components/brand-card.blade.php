@@ -1,11 +1,13 @@
 @props(['brand'])
 
 <div class="card h-100 text-center shadow-sm">
-    <!-- Brand Image -->
-    <img src="{{ asset('storage/' . $brand->brand_logo) }}"
-         alt="{{ $brand->brand_name }}"
-         class="card-img-top img-fluid"
-         style="object-fit: contain; aspect-ratio: 1 / 1; max-height: 300px;">
+    <!-- Brand Image with zoom effect -->
+    <div class="image-container">
+        <img src="{{ asset('storage/' . $brand->brand_logo) }}"
+             alt="{{ $brand->brand_name }}"
+             class="card-img-top img-fluid zoom-image"
+             style="object-fit: contain; aspect-ratio: 1 / 1; max-height: 300px;">
+    </div>
 
     <!-- Card Body -->
     <div class="card-body">
@@ -20,28 +22,45 @@
             </button>
 
             <!-- Update -->
-            <a href="{{route('brands.edit',$brand->brand_id)}}" class="btn btn-outline-warning btn-sm"><i class="bi bi-pencil-square m-3"></i></a>
+            <a href="{{ route('brands.edit', $brand->brand_id) }}" 
+               class="btn btn-outline-warning btn-sm">
+                <i class="bi bi-pencil-square m-3"></i>
+            </a>
 
             <!-- Delete -->
-            <form action="{{ route('brands.destroy', $brand->brand_id) }}" method="POST" class="delete-form">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3-fill m-3"></i></button>
-          </form>
+            <form action="{{ route('brands.destroy', $brand->brand_id) }}" 
+                  method="POST" class="delete-form">
+                @csrf
+                @method('DELETE')
+                <button type="submit" 
+                        class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash3-fill m-3"></i>
+                </button>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- Modal (uses brand_id as unique ID) -->
-<div class="modal fade" id="modalBrand{{ $brand->brand_id }}" tabindex="-1" aria-labelledby="modalBrandLabel{{ $brand->brand_id }}" aria-hidden="true">
+<div class="modal fade" 
+     id="modalBrand{{ $brand->brand_id }}" 
+     tabindex="-1" 
+     aria-labelledby="modalBrandLabel{{ $brand->brand_id }}" 
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-start">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalBrandLabel{{ $brand->brand_id }}">{{ $brand->brand_name }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" 
+            id="modalBrandLabel{{ $brand->brand_id }}">
+            {{ $brand->brand_name }}
+        </h5>
+        <button type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"></button>
       </div>
 
-      <!-- Centered image -->
+      <!-- Modal Body -->
       <div class="modal-body">
         <div class="text-center mb-3">
             <img src="{{ asset('storage/' . $brand->brand_logo) }}"
