@@ -15,12 +15,26 @@
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto align-items-center gap-2">
 
-        {{--listings stuff --}}
+        
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dashboard
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="dashboardDropdown">
+            <li>
+              <a class="dropdown-item text-white" href="{{ route('admin.dashboard') }}">
+                <i class="bi bi-speedometer2 me-2"></i>Admin Dashboard
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Listings Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="listingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Listings
           </a>
-          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="listingsDropdown">
               <li>
                 <a class="dropdown-item text-white" href="{{ route('cars.create') }}">
                   <i class="bi bi-car-front-fill me-2"></i>List a Car
@@ -36,33 +50,33 @@
                   <i class="bi bi-currency-dollar me-2"></i>Sold Cars
                 </a>
               </li>
-            </ul>
-
+          </ul>
         </li>
 
-        {{--listings drop down --}}
+        <!-- Car Brands and Users Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Car brands and users 
+          <a class="nav-link dropdown-toggle" href="#" id="brandsUsersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Car Brands and Users
           </a>
-          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="brandsUsersDropdown">
             <li>
-              <a class="dropdown-item text-white" href="{{route('admin.showAdminBrands')}}">
-                <i class="bi bi-car-front-fill me-2"></i>Car brands
+              <a class="dropdown-item text-white" href="{{ route('admin.showAdminBrands') }}">
+                <i class="bi bi-car-front-fill me-2"></i>Car Brands
               </a>
             </li>
             <li>
-              <a class="dropdown-item text-white" href="{{route('admin.showBodyStyles')}}">
-                <i class="bi bi-car-front-fill me-2"></i>Car body styles 
+              <a class="dropdown-item text-white" href="{{ route('admin.showBodyStyles') }}">
+                <i class="bi bi-car-front-fill me-2"></i>Car Body Styles
               </a>
             </li>
             <li>
-              <a class="dropdown-item text-white" href="{{route('admin.showBuyers')}}">
-                <i class="bi bi-person-badge-fill me-2"></i>Users 
+              <a class="dropdown-item text-white" href="{{ route('admin.showBuyers') }}">
+                <i class="bi bi-person-badge-fill me-2"></i>Users
               </a>
             </li>
           </ul>
         </li>
+
         <!-- Settings Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,19 +84,19 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
             <li>
-              <a class="dropdown-item text-white" href="{{route('admin.welcomeAdmin')}}">
+              <a class="dropdown-item text-white" href="{{ route('admin.welcomeAdmin') }}">
                 <i class="bi bi-car-front-fill me-2"></i>Car Settings
               </a>
             </li>
             <li>
               <a class="dropdown-item text-white" href="{{ route('profile.edit') }}">
-                <i class="bi bi-person-gear me-2"></i>update your informations 
+                <i class="bi bi-person-gear me-2"></i>Update Your Info
               </a>
             </li>
           </ul>
         </li>
 
-        <!-- Logout Button -->
+        <!-- Logout -->
         <li class="nav-item">
           <form action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf

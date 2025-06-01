@@ -10,6 +10,7 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\buyerController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 //--------------------------- general stuff -----------------------------------------------------
 
@@ -126,6 +127,9 @@ Route::get('/admin/sold-cars', [adminController::class, 'showSoldCars'])->name('
 Route::get('/admin/sold-cars/search', [adminController::class, 'searchSoldCars'])->name('cars.sold.search');
 
 Route::put('/cars/{id}/make-available', [adminController::class, 'makeCarAvailable'])->name('cars.makeAvailable');
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard') ;
+
 
 
 //--------------------------- buyer stuff --------------------------------------------------------

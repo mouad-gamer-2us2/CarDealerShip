@@ -567,5 +567,10 @@ public function makeCarAvailable($id)
     return redirect()->back()->with('success', 'Car marked as available.');
 }
 
+public function dashboard()
+{
+    return view('admins.dashboard');
+}
+
 
 }
