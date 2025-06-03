@@ -11,6 +11,7 @@ use App\Http\Controllers\buyerController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SimulatorController;
 
 //--------------------------- general stuff -----------------------------------------------------
 
@@ -135,10 +136,18 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('adm
 //--------------------------- buyer stuff --------------------------------------------------------
 
 Route::get('/Brands', [buyerController::class,'showBrand'])->name('Brand');
+
 Route::get('/Cars', [buyerController::class,'showCar'])->name('Car');
+
 Route::get('/buyer/cars/{id}', [buyerController::class, 'show'])->name('seulCar');
+
 Route::get('/CarsBrand', [buyerController::class,'showCarBrand'])->name('CarBrand');
 
+Route::get('/cars/user/search', [buyerController::class, 'searchUserCars'])->name('cars.user.search');
+
+Route::get('/brands/search', [buyerController::class, 'searchBrand'])->name('brands.search');
+
+Route::get('/payment-simulator', [SimulatorController::class, 'index'])->name('payment.simulator');
 
 
 //---------------------------- auth stuff --------------------------------------------------------

@@ -15,10 +15,10 @@
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto align-items-center gap-2">
 
-        
+        <!-- Dashboard -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dashboard
+          <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-speedometer2 me-1"></i>Dashboard
           </a>
           <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="dashboardDropdown">
             <li>
@@ -29,63 +29,63 @@
           </ul>
         </li>
 
-        <!-- Listings Dropdown -->
+        <!-- Listings -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="listingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Listings
+          <a class="nav-link dropdown-toggle" href="#" id="listingsDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-card-list me-1"></i>Listings
           </a>
-          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="listingsDropdown">
-              <li>
-                <a class="dropdown-item text-white" href="{{ route('cars.create') }}">
-                  <i class="bi bi-car-front-fill me-2"></i>List a Car
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="{{ route('admin.showCars') }}">
-                  <i class="bi bi-list-columns me-2"></i>All Listings
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="{{ route('cars.sold') }}">
-                  <i class="bi bi-currency-dollar me-2"></i>Sold Cars
-                </a>
-              </li>
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow">
+            <li>
+              <a class="dropdown-item text-white" href="{{ route('cars.create') }}">
+                <i class="bi bi-plus-circle me-2"></i>List a Car
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-white" href="{{ route('admin.showCars') }}">
+                <i class="bi bi-list-columns me-2"></i>All Listings
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-white" href="{{ route('cars.sold') }}">
+                <i class="bi bi-currency-dollar me-2"></i>Sold Cars
+              </a>
+            </li>
           </ul>
         </li>
 
-        <!-- Car Brands and Users Dropdown -->
+        <!-- Car Brands and Users -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="brandsUsersDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Car Brands and Users
+          <a class="nav-link dropdown-toggle" href="#" id="brandsUsersDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-diagram-3-fill me-1"></i>Car Brands & Users
           </a>
-          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="brandsUsersDropdown">
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow">
             <li>
               <a class="dropdown-item text-white" href="{{ route('admin.showAdminBrands') }}">
-                <i class="bi bi-car-front-fill me-2"></i>Car Brands
+                <i class="bi bi-tags-fill me-2"></i>Car Brands
               </a>
             </li>
             <li>
               <a class="dropdown-item text-white" href="{{ route('admin.showBodyStyles') }}">
-                <i class="bi bi-car-front-fill me-2"></i>Car Body Styles
+                <i class="bi bi-ui-checks-grid me-2"></i>Car Body Styles
               </a>
             </li>
             <li>
               <a class="dropdown-item text-white" href="{{ route('admin.showBuyers') }}">
-                <i class="bi bi-person-badge-fill me-2"></i>Users
+                <i class="bi bi-people-fill me-2"></i>Users
               </a>
             </li>
           </ul>
         </li>
 
-        <!-- Settings Dropdown -->
+        <!-- Settings -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Settings
+          <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-gear-fill me-1"></i>Settings
           </a>
-          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow" aria-labelledby="settingsDropdown">
+          <ul class="dropdown-menu dropdown-menu-end bg-dark border-0 shadow">
             <li>
               <a class="dropdown-item text-white" href="{{ route('admin.welcomeAdmin') }}">
-                <i class="bi bi-car-front-fill me-2"></i>Car Settings
+                <i class="bi bi-sliders me-2"></i>Car Settings
               </a>
             </li>
             <li>
@@ -101,7 +101,7 @@
           <form action="{{ route('logout') }}" method="POST" class="d-inline">
             @csrf
             <button type="submit" class="btn btn-outline-light btn-sm">
-              Logout
+              <i class="bi bi-box-arrow-right me-1"></i>Logout
             </button>
           </form>
         </li>

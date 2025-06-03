@@ -14,7 +14,7 @@
 
 <body>
   <x-user-nav /> {{-- Barre de navigation utilisateur --}}
-  <x-search-bar />
+ 
 
   <div class="container mt-4">
     {{ $slot }}

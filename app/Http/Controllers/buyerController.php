@@ -31,6 +31,27 @@ class buyerController extends Controller
 
 }
 
+public function searchUserCars(Request $request)
+{
+    $query = Car::with(['brand', 'photos', 'body']);
+
+    if ($request->has('term')) {
+        $term = $request->term;
+        $query->where(function ($q) use ($term) {
+            $q->where('model', 'like', "%$term%")
+              ->orWhere('engine', 'like', "%$term%")
+              ->orWhere('horsepower', 'like', "%$term%")
+              ->orWhere('price', 'like', "%$term%")
+              ->orWhereHas('brand', fn($b) => $b->where('brand_name', 'like', "%$term%"));
+        });
+    }
+
+    $cars = $query->paginate(6);
+
+    return view('partials.car.user_results', compact('cars'))->render();
+}
+
+
 public function showCarBrand(Request $request)
 {
     $brandId = $request->query('brand');
@@ -48,6 +69,18 @@ public function showCarBrand(Request $request)
     return view('buyers.Cars', compact('cars', 'brand'));
 }
 
+public function searchBrand(Request $request)
+{
+    $query = Brand::query();
+
+    if ($request->has('term') && $request->term !== '') {
+        $query->where('brand_name', 'like', '%' . $request->term . '%');
+    }
+
+    $brands = $query->paginate(6);
+
+    return view('partials.brand.brand_results1', compact('brands'))->render();
+}
 
 
 

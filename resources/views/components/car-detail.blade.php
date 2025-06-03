@@ -5,14 +5,31 @@
         <div class="row g-5">
             <!-- Partie image -->
             <div class="col-md-6">
-                <div class="text-center">
-                    <img src="{{ asset('storage/' . $car->photos->first()?->image) }}"
-                         alt="{{ $car->brand->brand_name . ' ' . $car->model }}"
-                         class="img-fluid rounded shadow-sm"
-                         style="max-height: 400px; object-fit: cover; width: 100%;">
-                    
+    <div id="carPhotosCarousel" class="carousel slide shadow-sm rounded" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach($car->photos as $index => $photo)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                    <img src="{{ asset('storage/' . $photo->image) }}"
+                         class="d-block w-100 rounded"
+                         alt="Car photo {{ $index + 1 }}"
+                         style="max-height: 400px; object-fit: cover;">
                 </div>
-            </div>
+            @endforeach
+        </div>
+
+        @if($car->photos->count() > 1)
+            <button class="carousel-control-prev" type="button" data-bs-target="#carPhotosCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carPhotosCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        @endif
+    </div>
+</div>
+
 
             <!-- Partie infos -->
             <div class="col-md-6">
