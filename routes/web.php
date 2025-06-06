@@ -145,7 +145,7 @@ Route::get('/CarsBrand', [buyerController::class,'showCarBrand'])->name('CarBran
 
 Route::get('/cars/user/search', [buyerController::class, 'searchUserCars'])->name('cars.user.search');
 
-Route::get('/brands/search', [buyerController::class, 'searchBrand'])->name('brands.search');
+Route::get('/brands/search', [buyerController::class, 'searchBrand'])->name('brands.search1');
 
 Route::get('/payment-simulator', [SimulatorController::class, 'index'])->name('payment.simulator');
 

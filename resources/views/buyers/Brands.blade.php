@@ -23,7 +23,7 @@
             const resultsContainer = document.getElementById('brand-results');
 
             function fetchResults(term = '', page = 1) {
-                fetch(`{{ route('brands.search') }}?term=${encodeURIComponent(term)}&page=${page}`)
+                fetch(`{{ route('brands.search1') }}?term=${encodeURIComponent(term)}&page=${page}`)
                     .then(res => res.text())
                     .then(html => resultsContainer.innerHTML = html);
             }
